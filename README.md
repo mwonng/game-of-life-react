@@ -8,7 +8,7 @@ npm or yarn
 
 ## how to
 
-`npm run install` or `yarn install`
+`npm install` or `yarn install`
 
 and run
 
