@@ -5,25 +5,26 @@ import './Game.css';
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    let game = new GameService(7, 7);
+    let game = new GameService(12, 12);
+    this.game = game;
     this.state = {
-      row: 7,
-      column: 7,
+      row: game.row,
+      column: game.col,
       life: game.board,
     }
   }
 
-  setActive = (arr,x,y) => {
-    arr[x][y] = Math.abs(1-arr[x][y]) ;
+  setActive = (x,y) => {
+    this.game.switchCell(x,y)
     this.setState({
-      life: arr
+      life: this.game.board
     })
   }
 
-  goNextState = (arr) => {
-    let next = GameService.getNextState(arr)
+  goNextState = () => {
+    this.game.getNextState()
     this.setState({
-      life: next,
+      life: this.game.board,
     })
   }
 
@@ -35,23 +36,23 @@ class Game extends React.Component {
 
   reset = () => {
     const { row, column } = this.state;
-    let game = new GameService(parseInt(row,10), parseInt(column, 10));
-    let newArr = game.board;
+    this.game.reset(parseInt(row, 10), parseInt(column, 10));
 
     this.setState({
-      life: newArr
+      life: this.game.board
     })
   }
 
   render () {
     const { life } = this.state;
+
     let rows = life.map((row, i)=>
       <tr key={i}>
         {row.map((col, j)=>
           <td
             key={j}
             className={col > 0 ? "active" : ""}
-            onClick={()=> this.setActive(life, i, j)}
+            onClick={()=> this.setActive(i, j)}
             ></td>
         )}
       </tr>
@@ -59,6 +60,7 @@ class Game extends React.Component {
     return (
       <div>
         <h1>Game of Life</h1>
+        <p>Please click any cell to active cell</p>
         <table>
           <tbody>
             {rows}
@@ -73,7 +75,7 @@ class Game extends React.Component {
           </label>
           <button onClick={() => this.reset()}> Set & Reset </button>
         </div>
-        <button onClick={() => this.goNextState(this.state.life)}> Next </button>
+        <button onClick={() => this.goNextState(this.state.life)}> Next generation</button>
       </div>
     )
   }
