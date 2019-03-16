@@ -1,14 +1,15 @@
 ## Summary
 simulate [Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 
-## screebshot
+## Screebshot
 ![screenshot](/public/screenshot.png)
 
-## requirement
+## Requirement
 
-node >= 10,
-npm or yarn
+- node >= 10,
+- npm or yarn installed
 
+[install node](https://nodejs.org/en/download/)
 
 ## Play game
 
@@ -17,7 +18,12 @@ npm or yarn
 
 *Note:* you can also change the board size and reset it.
 
-## how to
+## Algorithm
+
+- `maste` branch use traditional but not efficent.
+- `another-solution` branch provide another algorithn based on user interaction.
+
+## How to
 
 `npm install` or `yarn install`
 
@@ -25,10 +31,10 @@ and run
 
 `npm run dev` or `yarn dev`
 
-## production
+## Production
 
 `npm run build` or `yarn build`
 
-## test
+## Test
 
-``npm run test` or `yarn test`
+`npm run test` or `yarn test`
