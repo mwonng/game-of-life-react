@@ -1,0 +1,35 @@
+table {
+  margin: auto;
+  border: 1px #dbdbdb solid;
+  border-collapse: collapse;
+}
+
+table tr {
+  height: 2rem;
+}
+
+table td {
+  cursor: pointer;
+  width: 2rem;
+  border: 1px #dbdbdb solid;
+  border-collapse: collapse;
+}
+
+table td.active {
+  background-color: #251a8a;
+}
+
+div.reset {
+  margin: 1rem auto;
+}
+
+input[type="number"] {
+  width: 32px;
+  height: 1.8em;
+  margin: 5px;
+  padding: 0 5px;
+}
+
+label {
+  margin: 0 0.5rem;
+}
