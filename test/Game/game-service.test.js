@@ -12,5 +12,54 @@ test('initService', t => {
 
 
 test('getNextState()', t => {
-  t.pass();
+  let game = new GameService(6,6);
+  game.switchCell(1,2);
+  game.switchCell(2,3);
+  game.switchCell(3,1);
+  game.switchCell(3,2);
+  game.switchCell(3,3);
+  game.getNextState();
+  t.deepEqual(game.board, [
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,1,0,1,0,0],
+    [0,0,1,1,0,0],
+    [0,0,1,0,0,0],
+    [0,0,0,0,0,0],
+  ]);
+  game.getNextState();
+  t.deepEqual(game.board, [
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,1,0,0],
+    [0,1,0,1,0,0],
+    [0,0,1,1,0,0],
+    [0,0,0,0,0,0],
+  ]);
+  game.getNextState();
+  t.deepEqual(game.board, [
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,1,0,0,0],
+    [0,0,0,1,1,0],
+    [0,0,1,1,0,0],
+    [0,0,0,0,0,0],
+  ]);
+  game.getNextState();
+  t.deepEqual(game.board, [
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,1,0,0],
+    [0,0,0,0,1,0],
+    [0,0,1,1,1,0],
+    [0,0,0,0,0,0],
+  ]);
+});
+
+test('switchCell()', t => {
+  let game = new GameService(6,4);
+  game.switchCell(1,3);
+  t.is(game.board[1][3], 1,  "enable cell");
+  game.switchCell(1,3);
+  t.is(game.board[1][3], 0,  "disenable cell");
 });
