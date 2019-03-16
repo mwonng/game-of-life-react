@@ -11,7 +11,7 @@ class Game extends React.Component {
       row: game.row,
       column: game.col,
       life: game.board,
-    }
+    };
   }
 
   setActivity = (x,y) => {
@@ -31,7 +31,7 @@ class Game extends React.Component {
   onChange = (e) => {
     this.setState({
       [e.target.name] : e.target.value,
-    })
+    });
   }
 
   reset = () => {
@@ -40,7 +40,7 @@ class Game extends React.Component {
 
     this.setState({
       life: this.game.board,
-    })
+    });
   }
 
   render () {
@@ -52,7 +52,7 @@ class Game extends React.Component {
             key={j}
             className={col > 0 ? "active" : ""}
             onClick={()=> this.setActivity(i, j)}
-            ></td>
+          ></td>
         )}
       </tr>
     )
@@ -80,6 +80,5 @@ class Game extends React.Component {
     )
   }
 }
-
 
 export default Game

@@ -10,7 +10,6 @@ class GameService {
 
   /**
    * core func to generate next
-   * @param {object} lifeList
    * @return [array] return a result of board
    */
   getNextState() {
@@ -116,7 +115,7 @@ class GameService {
     let nextAlive = Object.keys(this.alive).filter( k => this.alive[k] === 2 || this.alive[k] === 3 );
 
     // dead to alive
-    let deadToAlive = Object.keys(this.dead).filter( k => this.dead[k] === 3 )
+    let deadToAlive = Object.keys(this.dead).filter( k => this.dead[k] === 3 );
 
     let nextActive = [...nextAlive, ...deadToAlive];
     nextActive.forEach(key => result[key] = -1);
