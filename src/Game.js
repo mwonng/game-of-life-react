@@ -5,67 +5,61 @@ import './Game.css';
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    var game = new GameService(7, 7);
+    var game = new GameService(12, 12);
+    this.game = game;
     this.state = {
-      row: 7,
-      column: 7,
+      row: this.game.row,
+      column: this.game.col,
       life: game.board,
-      alive: {},
-      dead: {}
     }
   }
 
   getAroundDeadlist = (list) =>{
-    let {life} = this.state;
+    let {life, alive} = this.state;
     let aliveKeys = Object.keys(list)
     let dead={}
-    aliveKeys.map( keyStr => {
-      let row = parseInt(keyStr[0], 10);
-      let col = parseInt(keyStr[1], 10);
 
-      for (let i=row-1; i<=row+1 && i >= 0 && i < this.state.row; i++) {
-        for (let j=col-1; j<=col+1 && j >= 0 && j < this.state.column; j++) {
-          if (life[i][j] < 1) {
-            if (Object.keys(dead).includes(`${i}${j}`)) {
-              dead[`${i}${j}`]=dead[`${i}${j}`]+1;
-            } else {
-              dead[`${i}${j}`] = 1;
-            }
+    aliveKeys.map( keyStr => {
+      let neighbours = this.game.getAroundKeys(keyStr);
+
+      neighbours.forEach( k => {
+        let row = parseInt(k[0], 10);
+        let col = parseInt(k[1], 10);
+        if (life[row][col] < 1) {
+          if (Object.keys(dead).includes(k)) {
+            dead[k]=dead[k]+1;
+          } else {
+            dead[k] = 1;
           }
+        } else {
+          alive[k]=alive[k]+1;
         }
-      }
-      this.setState({
-        dead
       })
     })
+    this.setState({
+      alive,
+      dead
+    })
+
+    return this.getNextStateList(alive,dead)
   }
 
+  setActive = (x,y) => {
+    this.game.switchCell(x,y);
+    // console.log("alive in se",this.game.alive);
 
-  setActive = (arr,x,y) => {
-    var {alive, dead} = this.state;
-
-    if (arr[x][y] === 0) {
-      this.setState({
-        alive: {[`${x}${y}`]:null, ...alive}
-      });
-    } else {
-      delete alive[`${x}${y}`]
-      this.setState({
-        alive: {...alive}
-      });
-    }
-
-    arr[x][y] = Math.abs(1-arr[x][y]) ;
     this.setState({
-      life: arr
-    })
+      // alive,
+      life: this.game.board
+    },);
   }
 
-  goNextState = (arr) => {
-    let next = GameService.getNextState(arr)
+  goNextState = () => {
+    let board = this.game.getNextState();
+
     this.setState({
-      life: next,
-    })
+      life: board,
+    });
   }
 
   onChange = (e) => {
@@ -76,11 +70,11 @@ class Game extends React.Component {
 
   reset = () => {
     const { row, column } = this.state;
-    let game = new GameService(parseInt(row,10), parseInt(column, 10));
-    let newArr = game.board;
+
+    this.game.reset(parseInt(row,10), parseInt(column, 10));
 
     this.setState({
-      life: newArr,
+      life: this.game.board,
       alive: {},
       dead: {}
     })
@@ -99,8 +93,7 @@ class Game extends React.Component {
         )}
       </tr>
     )
-    console.log("alive", alive);
-    console.log("dead", dead);
+
     return (
       <div>
         <h1>Game of Life</h1>
@@ -118,8 +111,8 @@ class Game extends React.Component {
           </label>
           <button onClick={() => this.reset()}> Set & Reset </button>
         </div>
-        <button onClick={() => this.goNextState(this.state.life)}> Next </button>
-        <button onClick={() => this.getAroundDeadlist(this.state.alive)}> get dead list</button>
+        <button onClick={() => this.goNextState(this.state.alive)}> Next </button>
+        {/* <button onClick={() => this.getAroundDeadlist(this.state.alive)}> get dead list</button> */}
       </div>
     )
   }
