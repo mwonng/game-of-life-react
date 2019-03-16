@@ -48,7 +48,11 @@ class GameService {
         board[Number(row)][Number(col)] = tmp[row][col];
       }
     }
-      return board;
+    return board;
+  }
+
+  static addToAliveList(i,j) {
+
   }
 }
 
