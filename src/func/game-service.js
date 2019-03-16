@@ -9,12 +9,12 @@ class GameService {
   }
 
   /**
-   *
+   * core func to generate next
    * @param {object} lifeList
-   *
+   * @return [array] return a result of board
    */
   getNextState() {
-    this.getAroundDeadlist();
+    this.prepareChangeList();
     let activeList = this.getNextStateList();
     this.board = Array(this.row).fill().map(() => Array(this.col).fill(0));
     Object.keys(activeList).forEach(keyStr => {
@@ -28,7 +28,7 @@ class GameService {
   }
 
   /**
-   * get all neighbours, including self
+   * get all possible neighbours, including self, max 9 in array
    * return @array [ String, String ]
    */
   getAroundKeys = (keyStr) => {
@@ -45,6 +45,11 @@ class GameService {
     return neighbours;
   }
 
+  /**
+   * enable cell or disable
+   * @param {row} x
+   * @param {column} y
+   */
   switchCell(x,y) {
     this.board[x][y] = 1-this.board[x][y] ;
     if (Object.keys(this.alive).includes(`${x}${y}`)) {
@@ -54,6 +59,11 @@ class GameService {
     }
   }
 
+  /**
+   * reset board array
+   * @param {row} x
+   * @param {column} y
+   */
   reset(x,y) {
     this.board = Array(x).fill().map(() => Array(y).fill(0));
     this.row = x;
@@ -61,16 +71,20 @@ class GameService {
   }
 
   /**
-   * return new alive array
+   *
+   * set new alive obj who might go dead or not
+   * set new dead obj who might go alive or nor
+   * format: { '${rowIndex}${colIndex}': aliveNeighbourCount, ...}
    *
    */
-  getAroundDeadlist = () =>{
+  prepareChangeList = () =>{
     let aliveKeys = Object.keys(this.alive)
     aliveKeys.map( keyStr => {
       let neighbours = this.getAroundKeys(keyStr);
       neighbours.forEach( k => {
         let row = parseInt(k[0], 10);
         let col = parseInt(k[1], 10);
+
         if (this.board[row][col] < 1) {
           if (Object.keys(this.dead).includes(k)) {
             this.dead[k] += 1;
@@ -80,13 +94,14 @@ class GameService {
         } else {
           this.alive[k] += 1;
         }
+
       })
     })
-    // return this.getNextStateList(this.alive, this.dead)
   }
 
-    /**
-   * return [ String ]
+  /**
+   * after prepareChangeList(), create a new array for next generation with two obj in prepareChangeList()
+   * @return: [ '${rowIndex}${colIndex}', ]
    */
   getNextStateList = () => {
     let result = {};
@@ -100,13 +115,6 @@ class GameService {
     let nextActive = [...nextAlive, ...deadToAlive];
     nextActive.forEach(key => result[key]=-1);
     return result;
-  }
-
-
-
-
-  static addToAliveList(i,j) {
-
   }
 }
 
