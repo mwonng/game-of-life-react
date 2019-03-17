@@ -1,13 +1,13 @@
 
 class GameService {
   constructor(row, col) {
-    this.row = row;
-    this.col = col;
+    this.row   = row;
+    this.col   = col;
     this.board = Array(this.row).fill().map(() => Array(this.col).fill(0));
   }
 
   getNextState() {
-    const maxRowIndex = this.row - 1;
+    const maxRowIndex    = this.row - 1;
     const maxColunmIndex = this.col - 1;
 
     const neighborActiveCount = (i, j) => {
@@ -57,8 +57,8 @@ class GameService {
 
   reset(x,y) {
     this.board = Array(x).fill().map(() => Array(y).fill(0));
-    this.row = x;
-    this.col = y;
+    this.row   = x;
+    this.col   = y;
   }
 }
 

@@ -5,8 +5,9 @@ import './Game.css';
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    let game = new GameService(12, 12);
-    this.game = game;
+    let game   = new GameService(12, 12);
+    this.game  = game;
+
     this.state = {
       row: game.row,
       column: game.col,
@@ -15,14 +16,16 @@ class Game extends React.Component {
   }
 
   setActive = (x,y) => {
-    this.game.switchCell(x,y)
+    this.game.switchCell(x,y);
+
     this.setState({
       life: this.game.board
     })
   }
 
   goNextState = () => {
-    this.game.getNextState()
+    this.game.getNextState();
+
     this.setState({
       life: this.game.board,
     })
@@ -56,7 +59,8 @@ class Game extends React.Component {
             ></td>
         )}
       </tr>
-    )
+    );
+
     return (
       <div>
         <h1>Game of Life</h1>
@@ -82,4 +86,4 @@ class Game extends React.Component {
 }
 
 
-export default Game
+export default Game;
