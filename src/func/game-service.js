@@ -10,6 +10,11 @@ class GameService {
     const maxRowIndex    = this.row - 1;
     const maxColunmIndex = this.col - 1;
 
+    /**
+     * get count of alive neighbor
+     * @param {rowIndex} i
+     * @param {colIndex} j
+     */
     const neighborActiveCount = (i, j) => {
       let count = 0;
       if (i > 0 && this.board[i - 1][j]) count += 1;
