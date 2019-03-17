@@ -20,8 +20,16 @@ simulate [Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 
 ## Algorithm
 
-- `maste` branch use traditional but not efficent.
+- `master` branch use traditional but not efficent.
 - `another-solution` branch provide another algorithn based on user interaction.
+
+**by my testing, if runs on 8000x8000 board, for 10 times generation, `master` branch will cost 24s or more without UI, `another-solution` branch cost 9.8s.**
+
+so with a huge board, traditional algorithm cost much more on iterate empty(dead) cell.
+
+## About code itself
+
+please bear with me any typo or space error because this code are written by my right hand only because of my left elbow injured.
 
 ## How to
 
