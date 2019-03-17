@@ -63,3 +63,19 @@ test('switchCell()', t => {
   game.switchCell(1,3);
   t.is(game.board[1][3], 0,  "disenable cell");
 });
+
+test('reset()', t => {
+  let game = new GameService(8,4);
+  game.switchCell(1,3);
+  game.getNextState();
+  game.reset(6,6);
+
+  t.deepEqual(game.board, [
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+  ], "reset action");
+});
