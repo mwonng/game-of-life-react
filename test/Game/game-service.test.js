@@ -66,10 +66,28 @@ test('switchCell()', t => {
 
 test('getAroundKeys()', t => {
   let game = new GameService(6,4);
-  let keys = game.getAroundKeys('00');
-  t.deepEqual(keys, ['00','01','10','11'], "getAroundKeys in coener is wrong");
-  let keysInMid = game.getAroundKeys('12');
-  t.deepEqual(keysInMid, ['01','02','03','11','12','13','21','22','23'], "getAroundKeys in middle is wrong");
-  let keysInSide = game.getAroundKeys('33');
-  t.deepEqual(keysInSide, ['22','23','32','33','42','43'], "getAroundKeys in sidebar is wrong");
+  let keys = game.getAroundKeys('0_0');
+  t.deepEqual(keys, ['0_0','0_1','1_0','1_1'], "getAroundKeys in corner is wrong");
+  let keysInMid = game.getAroundKeys('1_2');
+  t.deepEqual(keysInMid, ['0_1','0_2','0_3','1_1','1_2','1_3','2_1','2_2','2_3'], "getAroundKeys in middle is wrong");
+  let keysInSide = game.getAroundKeys('3_3');
+  t.deepEqual(keysInSide, ['2_2','2_3','3_2','3_3','4_2','4_3'], "getAroundKeys in sidebar is wrong");
+});
+
+test('reset()', t => {
+  let game = new GameService(8,4);
+  game.switchCell(1,3);
+  game.getNextState();
+  game.reset(6,6);
+
+  t.deepEqual(game.board, [
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+  ], "reset action");
+  t.deepEqual(game.alive, {});
+  t.deepEqual(game.dead, {});
 });
