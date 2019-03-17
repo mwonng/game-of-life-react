@@ -1,11 +1,11 @@
 
 class GameService {
   constructor(row, col) {
-    this.row = row;
-    this.col = col;
+    this.row   = row;
+    this.col   = col;
     this.board = Array(this.row).fill().map(() => Array(this.col).fill(0));
     this.alive = {};
-    this.dead = {};
+    this.dead  = {};
   }
 
   /**
@@ -21,11 +21,12 @@ class GameService {
     Object.keys(activeList).forEach(keyStr => {
       let i = parseInt(keyStr.split('_')[0], 10);
       let j = parseInt(keyStr.split('_')[1], 10);
+
       this.board[i][j] = 1;
     });
 
     this.alive = activeList;
-    this.dead = {};
+    this.dead  = {};
     return this.board;
   }
 
@@ -34,8 +35,8 @@ class GameService {
    * return @array [ String, String ]
    */
   getAroundKeys(keyStr) {
-    let rowNum = parseInt(keyStr.split('_')[0], 10);
-    let colNum = parseInt(keyStr.split('_')[1], 10);
+    let rowNum     = parseInt(keyStr.split('_')[0], 10);
+    let colNum     = parseInt(keyStr.split('_')[1], 10);
     let neighbours = [];
 
     for (let i=rowNum-1; i<=rowNum+1 ; i++) {
@@ -54,7 +55,8 @@ class GameService {
    * @param {column} y
    */
   switchCell(x,y) {
-    this.board[x][y] = 1-this.board[x][y] ;
+    this.board[x][y] = 1-this.board[x][y];
+
     if (Object.keys(this.alive).includes(`${x}_${y}`)) {
       delete this.alive[`${x}_${y}`];
     } else {
@@ -69,10 +71,10 @@ class GameService {
    */
   reset(x,y) {
     this.board = Array(x).fill().map(() => Array(y).fill(0));
-    this.row = x;
-    this.col = y;
+    this.row   = x;
+    this.col   = y;
     this.alive = {};
-    this.dead = {};
+    this.dead  = {};
   }
 
   /**
@@ -87,6 +89,7 @@ class GameService {
 
     aliveKeys.forEach( keyStr => {
       let neighbours = this.getAroundKeys(keyStr);
+
       neighbours.forEach( k => {
         let row = parseInt(k.split('_')[0], 10);
         let col = parseInt(k.split('_')[1], 10);

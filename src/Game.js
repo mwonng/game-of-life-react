@@ -5,8 +5,8 @@ import './Game.css';
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    var game = new GameService(12, 12);
-    this.game = game;
+    const game   = new GameService(12, 12);
+    this.game  = game;
     this.state = {
       row: game.row,
       column: game.col,
@@ -16,8 +16,9 @@ class Game extends React.Component {
 
   setActivity = (x,y) => {
     this.game.switchCell(x,y);
+
     this.setState({
-      life: this.game.board
+      life: this.game.board,
     },);
   }
 
@@ -81,4 +82,4 @@ class Game extends React.Component {
   }
 }
 
-export default Game
+export default Game;
